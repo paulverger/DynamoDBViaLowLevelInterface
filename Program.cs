@@ -3,8 +3,6 @@
 namespace DynamoDBViaLowLevelInterface
 {
 	using Amazon.DynamoDBv2;
-	using Amazon.DynamoDBv2.DataModel;
-	using Amazon.DynamoDBv2.DocumentModel;
 	using Amazon.DynamoDBv2.Model;
 	using System.Collections.Generic;
 	using System.Threading;
@@ -16,28 +14,31 @@ namespace DynamoDBViaLowLevelInterface
 		const string MovieTableName = "OldMovies";
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Choose option:");
-			Console.WriteLine("1 - to create OldMovies table");
-			Console.WriteLine("2 - to insert 3 movies into OldMovies table");
-			string choice = Console.ReadLine();
 			int intResult = 0;
-			Int32.TryParse(choice, out intResult);
-			switch (intResult)
+			do
 			{
-				case 1: 
-					CreateOldMoviesTableAsync(); 
-					break;
-				case 2: 
-					InsertSampleEntriesAsync(); 
-					break;
-				default:
-					Console.WriteLine("Invalid Entry. Please choose and integer between 1 and 2.");
-					break;
-			}
+				Console.WriteLine("Choose option:");
+				Console.WriteLine("1 - to create OldMovies table");
+				Console.WriteLine("2 - to insert 3 movies into OldMovies table");
+				string choice = Console.ReadLine();
+				Int32.TryParse(choice, out intResult);
+				switch (intResult)
+				{
+					case 1:
+						CreateOldMoviesTableAsync().Wait();
+						break;
+					case 2:
+						InsertSampleEntriesAsync().Wait();
+						break;
+					default:
+						Console.WriteLine("Invalid Entry. Please choose and integer between 1 and 2. Application exiting.");
+						break;
+				}
+			} while (intResult > 0 && intResult < 3);
 
-		}  // This is end of main
+		}
 
-		private static void CreateOldMoviesTableAsync()
+		private async static Task CreateOldMoviesTableAsync()
 		{
 			AmazonDynamoDBClient client = new AmazonDynamoDBClient();
 
@@ -88,20 +89,14 @@ namespace DynamoDBViaLowLevelInterface
 				}
 			};
 
-			client.CreateTableAsync(request);
-
-			// Wait 5 seconds for table creation to complete
-			System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
+			await client.CreateTableAsync(request);
 			Console.WriteLine("Table " + MovieTableName + " created");
-
 		}
 		
-		private static void InsertSampleEntriesAsync()
+		private async static Task InsertSampleEntriesAsync()
 		{
 
 			AmazonDynamoDBClient client = new AmazonDynamoDBClient();
-
 			string status = "";
 
 			try
@@ -119,7 +114,6 @@ namespace DynamoDBViaLowLevelInterface
 				Console.WriteLine("Table " + MovieTableName + " is not yet available.  Please try again.");
 				return;
 			}
-			
 
 			var request1 = new PutItemRequest
 			{
@@ -154,13 +148,9 @@ namespace DynamoDBViaLowLevelInterface
 				}
 			};
 
-			client.PutItemAsync(request1);
-			System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-			client.PutItemAsync(request2);
-			System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-			client.PutItemAsync(request3);
-			System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
+			await client.PutItemAsync(request1);
+			await client.PutItemAsync(request2);
+			await client.PutItemAsync(request3);
 			Console.WriteLine("Movies added");
 		}
 
