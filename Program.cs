@@ -1,13 +1,13 @@
 ﻿using System;
+using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.Model;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+//using AWSSDK;  // Installing AWSSDK created duplicate definitions
 
 namespace DynamoDBViaLowLevelInterface
 {
-	using Amazon.DynamoDBv2;
-	using Amazon.DynamoDBv2.Model;
-	using System.Collections.Generic;
-	using System.Threading;
-	using System.Threading.Tasks;
-	//using AWSSDK;  // Installing AWSSDK created duplicate definitions
 
 	class Program
 	{

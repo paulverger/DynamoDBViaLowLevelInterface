@@ -1,15 +1,14 @@
-# DynamoDBIdentity
+# DynamoDBViaLowLevelInterface
 
-This sample application demonstrates how to use ASP.NET Core Identity with
-Amazon's DynamoDB instead of a relational database to handle data storage,
-at a significant cost saving.
+This sample application demonstrates how to create and populate a DynamoDB table programmatically using ASP.NET Core with the DynamoDB Low Level Interface.
 
 ## DynamoDB is the NoSql database available on AWS.
 
 ## More Information
 
-Take a look at this [blog post](https://dynamodbdotnet.wordpress.com/2021/03/14/how-to-implement-asp-net-core-identity-using-dynamodb/)
-for more detailed infomation on using ASP.NET Core Identity with DynamoDB.
+
+Take a look at this [blog post](https://dynamodbdotnet.wordpress.com/???/)
+for more detailed infomation on how to create and populate a DynamoDB table programmatically using ASP.NET Core with the DynamoDB Low Level Interface.
 
 ## License
 
